@@ -5,6 +5,7 @@
     "babel-preset-stage-2": "^6.24.1"
   },
   "scripts": {
-    "start": "babel-node index.js --presets es2015,stage-2"
+    "dev": "babel-node index.js --presets es2015,stage-2",
+    "start": "yarn dev"
   }
 }

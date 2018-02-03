@@ -3,6 +3,6 @@ import http from 'http';
 http.createServer((req, res) => {
   res.writeHead(200, {'Content-Type': 'text/plain'});
   res.end('Hello World\n');
-}).listen(4949, '127.0.0.1');
+}).listen(4646, '127.0.0.1');
 
-console.log('Server running at http://127.0.0.1:1337/');
+console.log('http://localhost:4646')
