@@ -55,6 +55,6 @@ const allPagesUrls = async () => {
 }
 
 
-allPagesUrls().then((value) => {
+firstPageUrls().then((value) => {
   console.log(value)
 })
