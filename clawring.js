@@ -35,7 +35,6 @@ const allPagesUrls = async () => {
   for (let i = 0; i < urls.length; i++) {
     await page.goto(urls[i])
 
-    // return でnodeListsだけ返す
     const hello = await page.evaluate(() => {
       const nodeLists = Array.from(document.querySelectorAll('a'))
       // nodeLists.forEach((node) => {
