@@ -9,7 +9,6 @@
     "dev": "babel-node index.js --presets es2015,stage-2",
     "start": "yarn dev",
     "scraping": "babel-node scraping.js --presets es2015,stage-2",
-    "clawring": "babel-node clawring.js --presets es2015,stage-2",
-    "request": "babel-node request.js --presets es2015,stage-2"
+    "clawring": "babel-node crawring.js --presets es2015,stage-2"
   }
 }
