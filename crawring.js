@@ -3,7 +3,8 @@ const puppeteer = require('puppeteer')
 require('events').EventEmitter.defaultMaxListeners = 0
 
 // const BASE_URL = 'https://wovn.io'
-const BASE_URL = 'http://nogizaka46.com'
+// const BASE_URL = 'http://nogizaka46.com'
+const BASE_URL = 'http://minimaltech.co/'
 
 const firstPageUrls = async () => {
   const browser = await puppeteer.launch({ headless: false })
@@ -30,24 +31,27 @@ const firstPageUrls = async () => {
 const allPagesUrls = async () => {
   const browser = await puppeteer.launch({ headless: false })
   const page = await browser.newPage()
+  // const HOST = 'www.nogizaka46.com'
+  const HOST = 'minimaltech.co'
 
   var urls = await firstPageUrls()
   for (let i = 0; i < urls.length; i++) {
-    await page.goto(urls[i])
+    try {
+      await page.goto(urls[i])
 
-    const hello = await page.evaluate(() => {
-      const nodeLists = Array.from(document.querySelectorAll('a'))
-      // nodeLists.forEach((node) => {
-      //   if (window.location.host !== node.host || urls.indexOf(node.href) > -1) return
-      //   urls.push(node.href)
-      //   return
-      // })
-      let links = nodeLists.map(node => {
-        return node.href
+      const nodeLists = await page.evaluate(() => {
+        return Array.from(document.querySelectorAll('a')).map(node => {
+          return { host: node.host, href: node.href}
+        })
       })
-      return links
-    })
-    return hello
+      nodeLists.forEach(node => {
+        if (node.host === HOST && !urls.includes(node.href)) {
+          urls.push(node.href)
+        }
+      })
+    } catch (err) {
+      reject(err)
+    }
   }
 
   await browser.close()
@@ -55,6 +59,6 @@ const allPagesUrls = async () => {
 }
 
 
-firstPageUrls().then((value) => {
+allPagesUrls().then((value) => {
   console.log(value)
 })
