@@ -31,30 +31,31 @@ const allPagesUrls = async () => {
   const browser = await puppeteer.launch({ headless: false })
   const page = await browser.newPage()
 
-  const urls = await firstPageUrls()
-  await urls.map(async (url) => {
-    await page.evaluate(async () => {
-      await page.goto(url)
-      await page.waitForNavigation();
-      const nodeLists = document.querySelectorAll('a')
-      await page.close()
+  var urls = await firstPageUrls()
+  for (let i = 0; i < urls.length; i++) {
+    await page.goto(urls[i])
 
-      await nodeLists.forEach(node => {
-        if (window.location.host !== node.host || urls.indexOf(node.href) > -1) return
-        urls.push(node.href)
-        return
+    // return でnodeListsだけ返す
+    const hello = await page.evaluate(() => {
+      const nodeLists = Array.from(document.querySelectorAll('a'))
+      // nodeLists.forEach((node) => {
+      //   if (window.location.host !== node.host || urls.indexOf(node.href) > -1) return
+      //   urls.push(node.href)
+      //   return
+      // })
+      let links = nodeLists.map(node => {
+        return node.href
       })
+      return links
     })
-  })
+    return hello
+  }
 
   await browser.close()
   return urls
 }
 
-firstPageUrls().then((value) => {
+
+allPagesUrls().then((value) => {
   console.log(value)
 })
-
-// allPagesUrls().then((value) => {
-//   console.log(value)
-// })

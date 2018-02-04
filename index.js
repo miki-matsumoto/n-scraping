@@ -3,7 +3,7 @@ import request from 'request'
 
 http.createServer((req, res) => {
   request({url: 'https://wovn.io', encoding: null}, (err, res, data) => {
-    console.log(res)
+    console.log(res.body)
   })
 
   res.writeHead(200, {'Content-Type': 'text/plain'})
